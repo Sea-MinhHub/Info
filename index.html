@@ -107,26 +107,21 @@
       margin-bottom: 15px;
     }
 
-    /* 🍃 Lá rơi */
-    .leaf {
+    /* 🍃 Canvas hiệu ứng lá */
+    canvas#leavesCanvas {
       position: fixed;
-      top: -10vh;
-      width: 25px;
-      height: 25px;
-      background-image: url('https://i.imgur.com/H6ucEae.png');
-      background-size: cover;
-      opacity: 0.9;
-      animation: fall linear infinite;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
-    }
-
-    @keyframes fall {
-      0% {transform: translateY(-10vh) rotate(0deg); opacity: 1;}
-      100% {transform: translateY(110vh) rotate(360deg); opacity: 0.7;}
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
+
+  <canvas id="leavesCanvas"></canvas>
 
   <div class="card">
     <img src="Logo.jpg" alt="Sea Minh Hub Logo" class="logo">
@@ -144,17 +139,69 @@
   </div>
 
   <script>
-    // 🍃 Tạo hiệu ứng lá rơi
-    const numLeaves = 20; // số lượng lá
-    for (let i = 0; i < numLeaves; i++) {
-      const leaf = document.createElement('div');
-      leaf.classList.add('leaf');
-      leaf.style.left = Math.random() * 100 + 'vw';
-      leaf.style.animationDuration = 5 + Math.random() * 5 + 's';
-      leaf.style.animationDelay = Math.random() * 5 + 's';
-      leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
-      document.body.appendChild(leaf);
+    // 🍃 Canvas hiệu ứng lá rơi tự tạo
+    const canvas = document.getElementById("leavesCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let W, H;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
     }
+    window.addEventListener("resize", resize);
+    resize();
+
+    class Leaf {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * -H;
+        this.size = 15 + Math.random() * 25;
+        this.speedY = 1 + Math.random() * 2;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.angle = Math.random() * 360;
+        this.spin = (Math.random() - 0.5) * 2;
+        this.color = `hsl(${90 + Math.random() * 60}, 70%, ${40 + Math.random() * 20}%)`;
+      }
+
+      draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.angle * Math.PI) / 180);
+        ctx.scale(1, 0.6);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.01) * 1.5 + this.speedX;
+        this.angle += this.spin;
+        if (this.y > H + this.size) this.reset();
+      }
+    }
+
+    const leaves = Array.from({ length: 30 }, () => new Leaf());
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      for (let leaf of leaves) {
+        leaf.update();
+        leaf.draw(ctx);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   </script>
 
 </body>
