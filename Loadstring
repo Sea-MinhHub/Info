@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loadstring/HttpGet Builder</title>
+  <style>
+    :root{ --bg:#0f1720; --panel:#0b1220; --accent:#00aaff; --text:#dbeafe; --muted:#93c5fd; }
+    *{ box-sizing:border-box; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    body{ margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#071026,#071827); color:var(--text); padding:24px; }
+    .card{ width:100%; max-width:680px; background:var(--panel); border:1px solid rgba(0,170,255,0.08); padding:20px; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.6); }
+    h1{ margin:0 0 8px 0; font-size:18px; color:var(--accent); }
+    p{ margin:0 0 18px 0; color:var(--muted); font-size:13px; }
+    .row{ display:flex; gap:10px; align-items:center; }
+    input[type="url"]{ flex:1; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:#07121a; color:var(--text); outline:none; font-size:14px; }
+    button{ padding:10px 12px; border-radius:8px; border:1px solid rgba(0,170,255,0.12); background:transparent; color:var(--accent); cursor:pointer; font-weight:600; }
+    button.primary{ background:var(--accent); color:#001; border:none; }
+    .preview{ margin-top:14px; padding:12px; border-radius:8px; background:#051122; font-family:monospace; font-size:13px; color:#cfefff; overflow-wrap:anywhere; min-height:40px; display:flex; align-items:center; }
+    .hint{ margin-top:10px; color:#9fbfe7; font-size:12px; }
+    .flex-between{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .small{ font-size:12px; color:#9fbfe7; }
+    .success{ color:#7bf59e; }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h1>Loadstring / HttpGet Builder</h1>
+    <p>Nhập URL của script rồi bấm nút để copy chuỗi phù hợp để paste vào executor Roblox (ví dụ: <code>loadstring(game:HttpGet("URL", true))()</code>).</p>
+
+    <div class="row">
+      <input id="urlInput" type="url" inputmode="url" placeholder="Nhập URL (ví dụ: https://pastebin.com/raw/abcd1234)" />
+      <button id="copyLoad" class="primary">Copy loadstring</button>
+      <button id="copyGet">Copy HttpGet</button>
+    </div>
+
+    <div class="preview" id="preview">Preview sẽ hiện ở đây khi bạn gõ URL.</div>
+
+    <div class="flex-between" style="margin-top:12px;">
+      <div class="small">Kết quả sẽ được copy vào clipboard.</div>
+      <div id="msg" class="small"></div>
+    </div>
+
+    <p class="hint">Lưu ý: kiểm tra URL trước khi chạy. Không chạy code từ nguồn không tin cậy.</p>
+  </div>
+
+  <script>
+    const urlInput = document.getElementById('urlInput');
+    const preview = document.getElementById('preview');
+    const copyLoad = document.getElementById('copyLoad');
+    const copyGet = document.getElementById('copyGet');
+    const msg = document.getElementById('msg');
+
+    function sanitizeForLua(str){
+      // Escape backslashes and double quotes so string fits inside "..."
+      return str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    }
+
+    function updatePreview(){
+      const url = (urlInput.value || "").trim();
+      if(!url){
+        preview.textContent = "Preview sẽ hiện ở đây khi bạn gõ URL.";
+        return;
+      }
+      const safe = sanitizeForLua(url);
+      preview.textContent = 'loadstring(game:HttpGet("' + safe + '", true))()';
+    }
+
+    urlInput.addEventListener('input', updatePreview);
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        msg.textContent = "Đã copy!";
+        msg.classList.add('success');
+        setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); }, 1800);
+      }catch(e){
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try{ document.execCommand('copy'); msg.textContent = "Đã copy (fallback)!"; msg.classList.add('success'); setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); },1800); }catch(err){ alert("Không thể copy tự động. Hãy copy thủ công:\n\n" + text); }
+        ta.remove();
+      }
+    }
+
+    copyLoad.addEventListener('click', ()=>{
+      const url = (urlInput.value || "").trim();
+      if(!url){ alert("Vui lòng nhập URL trước khi copy."); urlInput.focus(); return; }
+      const safe = sanitizeForLua(url);
+      const result = 'loadstring(game:HttpGet("' + safe + '", true))()';
+      copyText(result);
+    });
+
+    copyGet.addEventListener('click', ()=>{
+      const url = (urlInput.value || "").trim();
+      if(!url){ alert("Vui lòng nhập URL trước khi copy."); urlInput.focus(); return; }
+      const safe = sanitizeForLua(url);
+      const result = 'game:HttpGet("' + safe + '", true)';
+      copyText(result);
+    });
+
+    // optional: press Enter to copy loadstring
+    urlInput.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter') { e.preventDefault(); copyLoad.click(); }
+    });
+
+    // initialize preview if input has value from saved form/autofill
+    updatePreview();
+  </script>
+</body>
+</html>
