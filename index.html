@@ -7,211 +7,85 @@
   <meta name="description" content="Thông tin liên hệ Sea | Minh Hub — Discord & YouTube" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
     :root {
       --accent1: #6366f1;
       --accent2: #06b6d4;
       --accent3: #a855f7;
       --muted: #94a3b8;
-      --radius: 16px;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Poppins', sans-serif;
-      color: #e2e8f0;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;overflow:hidden;font-family:'Poppins',sans-serif;color:#e2e8f0}
+    body{
+      display:flex;align-items:center;justify-content:center;position:relative;
+      background:linear-gradient(120deg,var(--accent1),var(--accent2),var(--accent3));
+      background-size:300% 300%;animation:gradientFlow 10s ease infinite;
     }
-
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
-      background-size: 300% 300%;
-      animation: gradientFlow 10s ease infinite;
+    @keyframes gradientFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    canvas#effectCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .card{position:relative;z-index:1;max-width:720px;padding:36px;border-radius:20px;background:rgba(15,23,42,.7);
+      box-shadow:0 0 40px rgba(0,0,0,.4);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);text-align:center;
+      animation:fadeIn 1.2s ease;
     }
-
-    @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+    .logo{width:110px;height:110px;border-radius:50%;object-fit:cover;
+      box-shadow:0 0 35px rgba(99,102,241,.7);animation:glowPulse 4s ease-in-out infinite;margin-bottom:16px;
     }
-
-    canvas#effectCanvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
+    @keyframes glowPulse{0%,100%{box-shadow:0 0 30px rgba(99,102,241,.7)}50%{box-shadow:0 0 50px rgba(6,182,212,.9)}}
+    .title{font-size:26px;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
-
-    .card {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 720px;
-      padding: 36px;
-      border-radius: var(--radius);
-      background: rgba(15, 23, 42, 0.7);
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-      animation: fadeIn 1.2s ease;
+    .subtitle{font-size:14px;color:var(--muted);margin-top:6px;margin-bottom:28px}
+    .actions{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+    .btn{padding:12px 22px;border-radius:12px;font-weight:600;text-decoration:none;color:white;
+      transition:all .3s ease;position:relative;overflow:hidden;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .btn::before{content:"";position:absolute;inset:0;border-radius:inherit;
+      background:linear-gradient(120deg,rgba(255,255,255,.6),transparent,rgba(255,255,255,.6));
+      opacity:0;transition:opacity .3s ease;
     }
-
-    .logo {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 35px rgba(99,102,241,0.7);
-      animation: glowPulse 4s ease-in-out infinite;
-      margin-bottom: 16px;
-    }
-
-    @keyframes glowPulse {
-      0%,100% { box-shadow: 0 0 30px rgba(99,102,241,0.7); }
-      50% { box-shadow: 0 0 50px rgba(6,182,212,0.9); }
-    }
-
-    .title {
-      font-size: 26px;
-      font-weight: 700;
-      background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 6px;
-      margin-bottom: 28px;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 22px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      color: white;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(120deg, rgba(255,255,255,0.6), transparent, rgba(255,255,255,0.6));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .btn:hover::before {
-      opacity: 0.25;
-    }
-
-    .discord {
-      background: linear-gradient(90deg,#5865f2,#8b5cf6);
-      box-shadow: 0 0 25px rgba(88,101,242,0.6);
-    }
-
-    .youtube {
-      background: linear-gradient(90deg,#ff4d4d,#ff0000,#f97316);
-      box-shadow: 0 0 25px rgba(255,77,77,0.6);
-    }
-
-    .btn:hover {
-      transform: scale(1.1);
-      filter: brightness(1.2);
-      box-shadow: 0 0 40px rgba(255,255,255,0.3);
-    }
+    .btn:hover::before{opacity:.25}
+    .discord{background:linear-gradient(90deg,#5865f2,#8b5cf6);box-shadow:0 0 25px rgba(88,101,242,.6)}
+    .youtube{background:linear-gradient(90deg,#ff4d4d,#ff0000,#f97316);box-shadow:0 0 25px rgba(255,77,77,.6)}
+    .btn:hover{transform:scale(1.1);filter:brightness(1.2);box-shadow:0 0 40px rgba(255,255,255,.3)}
   </style>
 </head>
 <body>
   <canvas id="effectCanvas"></canvas>
-
   <main class="card">
     <img src="Logo.jpg" alt="Sea Minh Hub Logo" class="logo" />
     <h1 class="title">Sea | Minh Hub</h1>
     <p class="subtitle">Kết nối cùng Sea | Minh Hub — Discord & YouTube</p>
-
     <div class="actions">
       <a class="btn discord" href="https://discord.gg/kJqB7R242H" target="_blank">🌌 Discord</a>
       <a class="btn youtube" href="https://www.youtube.com/@SeaMinhHub" target="_blank">🔥 YouTube</a>
     </div>
+
+    <!-- My Scripts Section -->
+    <div style="margin-top:40px;">
+      <h2 style="font-size:20px;margin-bottom:15px;color:#a5b4fc;">My Scripts</h2>
+      <a class="btn" href="Scripts.html" style="background:linear-gradient(90deg,#14b8a6,#3b82f6,#8b5cf6);box-shadow:0 0 25px rgba(59,130,246,.5);">
+        💻 Open Scripts Page
+      </a>
+    </div>
   </main>
 
   <script>
-    // Hiệu ứng lá rơi ánh sáng đa màu
-    const canvas = document.getElementById('effectCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let w, h;
-
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+    const canvas=document.getElementById('effectCanvas'),ctx=canvas.getContext('2d');
+    let particles=[],w,h;
+    function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+    window.addEventListener('resize',resize);resize();
+    for(let i=0;i<120;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:2+Math.random()*4,d:Math.random()*2+.5,
+      color:`hsl(${Math.random()*360},90%,60%)`,alpha:Math.random()*.6+.3});
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      for(let p of particles){ctx.beginPath();ctx.fillStyle=p.color;ctx.globalAlpha=p.alpha;ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}
+      update();requestAnimationFrame(draw);
     }
-    window.addEventListener('resize', resize);
-    resize();
-
-    for (let i = 0; i < 120; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: 2 + Math.random() * 4,
-        d: Math.random() * 2 + 0.5,
-        color: `hsl(${Math.random() * 360}, 90%, 60%)`,
-        alpha: Math.random() * 0.6 + 0.3
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      for (let p of particles) {
-        ctx.beginPath();
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      update();
-      requestAnimationFrame(draw);
-    }
-
-    function update() {
-      for (let p of particles) {
-        p.y += p.d;
-        p.x += Math.sin(p.y * 0.015) * 0.5;
-        if (p.y > h) {
-          p.y = 0;
-          p.x = Math.random() * w;
-          p.color = `hsl(${Math.random() * 360}, 90%, 60%)`;
-        }
+    function update(){
+      for(let p of particles){p.y+=p.d;p.x+=Math.sin(p.y*.015)*.5;
+        if(p.y>h){p.y=0;p.x=Math.random()*w;p.color=`hsl(${Math.random()*360},90%,60%)`;}
       }
     }
-
     draw();
   </script>
 </body>
