@@ -6,43 +6,151 @@
   <title>Loadstring/HttpGet Builder</title>
   <style>
     :root{ --bg:#0f1720; --panel:#0b1220; --accent:#00aaff; --text:#dbeafe; --muted:#93c5fd; }
-    *{ box-sizing:border-box; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-    body{ margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#071026,#071827); color:var(--text); padding:24px; }
-    .card{ width:100%; max-width:680px; background:var(--panel); border:1px solid rgba(0,170,255,0.08); padding:20px; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.6); text-align:center; }
-    .logo{ width:80px; height:80px; object-fit:cover; border-radius:50%; margin-bottom:10px; box-shadow:0 0 12px rgba(0,170,255,0.4); }
-    h1{ margin:0 0 8px 0; font-size:18px; color:var(--accent); }
-    p{ margin:0 0 18px 0; color:var(--muted); font-size:13px; }
-    .row{ display:flex; gap:10px; align-items:center; }
-    input[type="url"]{ flex:1; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:#07121a; color:var(--text); outline:none; font-size:14px; }
-    button{ padding:10px 12px; border-radius:8px; border:1px solid rgba(0,170,255,0.12); background:transparent; color:var(--accent); cursor:pointer; font-weight:600; }
-    button.primary{ background:var(--accent); color:#001; border:none; }
-    .preview{ margin-top:14px; padding:12px; border-radius:8px; background:#051122; font-family:monospace; font-size:13px; color:#cfefff; overflow-wrap:anywhere; min-height:40px; display:flex; align-items:center; }
-    .hint{ margin-top:10px; color:#9fbfe7; font-size:12px; }
+    *{ box-sizing:border-box; font-family:"Poppins", sans-serif; margin:0; padding:0; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(120deg,#6366f1,#06b6d4,#a855f7);
+      background-size:300% 300%;
+      animation:gradient 10s ease infinite;
+      color:var(--text);
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    @keyframes gradient{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    .card{
+      width:100%;
+      max-width:680px;
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,0.1);
+      padding:20px;
+      border-radius:14px;
+      box-shadow:0 6px 26px rgba(0,0,0,0.6);
+      text-align:center;
+      z-index:2;
+    }
+
+    .logo{
+      width:90px;
+      height:90px;
+      object-fit:cover;
+      border-radius:50%;
+      margin-bottom:12px;
+      box-shadow:0 0 15px rgba(0,170,255,0.45);
+      animation:pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ box-shadow:0 0 35px rgba(99,102,241,0.8); }
+      50%{ box-shadow:0 0 55px rgba(6,182,212,0.9); }
+    }
+
+    h1{ font-size:22px; font-weight:700; color:var(--accent); margin-bottom:14px; }
+    p{ margin-bottom:18px; color:var(--muted); font-size:13px; }
+    .row{ display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+
+    input[type="url"]{
+      flex:1; padding:10px 12px; border-radius:10px;
+      border:1px solid rgba(255,255,255,0.1);
+      background:#07121a;
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    button{
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      font-weight:600;
+      cursor:pointer;
+      font-size:14px;
+      transition:0.2s;
+    }
+    button.primary{
+      background:var(--accent);
+      color:#001;
+    }
+    button.primary:hover, #copyGet:hover{
+      filter:brightness(1.2);
+      transform:scale(1.04);
+    }
+    #copyGet{
+      background:transparent;
+      border:1px solid var(--accent);
+      color:var(--accent);
+    }
+
+    .preview{
+      margin-top:14px;
+      padding:12px;
+      border-radius:10px;
+      background:#051122;
+      font-family:monospace;
+      font-size:13px;
+      color:#cfefff;
+      overflow-wrap:anywhere;
+      min-height:40px;
+      display:flex;
+      align-items:center;
+    }
+
     .flex-between{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
     .small{ font-size:12px; color:#9fbfe7; }
     .success{ color:#7bf59e; }
+
+    /* Floating leaves */
+    .leaf{
+      position:fixed;
+      top:-20px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      filter:drop-shadow(0 0 6px currentColor);
+      opacity:0.9;
+      animation:fall linear infinite;
+      z-index:1;
+    }
+    @keyframes fall{
+      to{ transform:translateY(110vh) rotate(360deg); }
+    }
+
+    canvas#leavesCanvas{
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:0;
+    }
   </style>
 </head>
 <body>
-  <div class="card" role="main">
+  <canvas id="leavesCanvas"></canvas>
+  <div class="card">
     <img src="Logo.jpg" alt="Logo" class="logo" />
     <h1>Loadstring / HttpGet Builder</h1>
-    <p>Nhập URL của script rồi bấm nút để copy chuỗi phù hợp để paste vào executor Roblox (ví dụ: <code>loadstring(game:HttpGet("URL", true))()</code>).</p>
+    <p>Nhập URL rồi copy chuỗi để dùng trong Roblox Executor.</p>
 
     <div class="row">
-      <input id="urlInput" type="url" inputmode="url" placeholder="Nhập URL (ví dụ: https://pastebin.com/raw/abcd1234)" />
+      <input id="urlInput" type="url" placeholder="Nhập URL (vd: https://pastebin.com/raw/abcd)" />
       <button id="copyLoad" class="primary">Copy loadstring</button>
       <button id="copyGet">Copy HttpGet</button>
     </div>
 
-    <div class="preview" id="preview">Preview sẽ hiện ở đây khi bạn gõ URL.</div>
+    <div class="preview" id="preview">Preview sẽ hiện tại đây</div>
 
     <div class="flex-between" style="margin-top:12px;">
-      <div class="small">Kết quả sẽ được copy vào clipboard.</div>
+      <div class="small">Kết quả sẽ được copy.</div>
       <div id="msg" class="small"></div>
     </div>
-
-    <p class="hint">Lưu ý: kiểm tra URL trước khi chạy. Không chạy code từ nguồn không tin cậy.</p>
   </div>
 
   <script>
@@ -58,10 +166,7 @@
 
     function updatePreview(){
       const url = (urlInput.value || "").trim();
-      if(!url){
-        preview.textContent = "Preview sẽ hiện ở đây khi bạn gõ URL.";
-        return;
-      }
+      if(!url){ preview.textContent = "Preview sẽ hiện tại đây"; return; }
       const safe = sanitizeForLua(url);
       preview.textContent = 'loadstring(game:HttpGet("' + safe + '", true))()';
     }
@@ -73,20 +178,27 @@
         await navigator.clipboard.writeText(text);
         msg.textContent = "Đã copy!";
         msg.classList.add('success');
-        setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); }, 1800);
+        setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); },1800);
       }catch(e){
         const ta = document.createElement('textarea');
         ta.value = text;
         document.body.appendChild(ta);
         ta.select();
-        try{ document.execCommand('copy'); msg.textContent = "Đã copy (fallback)!"; msg.classList.add('success'); setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); },1800); }catch(err){ alert("Không thể copy tự động. Hãy copy thủ công:\n\n" + text); }
+        try{
+          document.execCommand('copy');
+          msg.textContent = "Đã copy (fallback)!";
+          msg.classList.add('success');
+          setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); },1800);
+        }catch(err){
+          alert("Không thể copy tự động. Hãy copy thủ công:\n\n" + text);
+        }
         ta.remove();
       }
     }
 
     copyLoad.addEventListener('click', ()=>{
       const url = (urlInput.value || "").trim();
-      if(!url){ alert("Vui lòng nhập URL trước khi copy."); urlInput.focus(); return; }
+      if(!url){ alert("Vui lòng nhập URL."); urlInput.focus(); return; }
       const safe = sanitizeForLua(url);
       const result = 'loadstring(game:HttpGet("' + safe + '", true))()';
       copyText(result);
@@ -94,17 +206,79 @@
 
     copyGet.addEventListener('click', ()=>{
       const url = (urlInput.value || "").trim();
-      if(!url){ alert("Vui lòng nhập URL trước khi copy."); urlInput.focus(); return; }
+      if(!url){ alert("Vui lòng nhập URL."); urlInput.focus(); return; }
       const safe = sanitizeForLua(url);
       const result = 'game:HttpGet("' + safe + '", true)';
       copyText(result);
     });
 
     urlInput.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter') { e.preventDefault(); copyLoad.click(); }
+      if(e.key === 'Enter'){ e.preventDefault(); copyLoad.click(); }
     });
 
     updatePreview();
+  </script>
+
+  <script>
+    const colors = ["#00eaff", "#00ffc6", "#4dffea", "#7affff"];
+    function createLeaf(){
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.style.left = Math.random()*100 + "%";
+      leaf.style.background = colors[Math.floor(Math.random()*colors.length)];
+      leaf.style.animationDuration = (4+Math.random()*4) + "s";
+      document.body.appendChild(leaf);
+      setTimeout(()=>leaf.remove(),8000);
+    }
+    setInterval(createLeaf, 350);
+  </script>
+
+  <script>
+    const canvas = document.getElementById("leavesCanvas");
+    const ctx = canvas.getContext("2d");
+    let W, H;
+    function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    window.addEventListener("resize", resize); resize();
+
+    class Leaf {
+      constructor(){ this.reset(); }
+      reset(){
+        this.x=Math.random()*W;
+        this.y=Math.random()*-H;
+        this.size=10+Math.random()*25;
+        this.speedY=1+Math.random()*2;
+        this.speedX=Math.random()*1-0.5;
+        this.angle=Math.random()*360;
+        this.spin=(Math.random()-0.5)*2;
+        const colors=["hsl(210,90%,60%)","hsl(190,90%,60%)","hsl(250,90%,65%)","hsl(170,90%,60%)"];
+        this.color=colors[Math.floor(Math.random()*colors.length)];
+      }
+      draw(ctx){
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.rotate((this.angle*Math.PI)/180);
+        ctx.scale(1,0.6);
+        ctx.beginPath();
+        ctx.ellipse(0,0,this.size,this.size/2,0,0,2*Math.PI);
+        ctx.fillStyle=this.color;
+        ctx.shadowColor=this.color;
+        ctx.shadowBlur=12;
+        ctx.fill();
+        ctx.restore();
+      }
+      update(){
+        this.y+=this.speedY;
+        this.x+=Math.sin(this.y*0.01)*1.5+this.speedX;
+        this.angle+=this.spin;
+        if(this.y>H+this.size) this.reset();
+      }
+    }
+    const leaves=Array.from({length:40},()=>new Leaf());
+    function animate(){
+      ctx.clearRect(0,0,W,H);
+      for(const leaf of leaves){ leaf.update(); leaf.draw(ctx);} requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
