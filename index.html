@@ -56,7 +56,6 @@
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
 
-    /* 🕒 Đồng hồ neon */
     #datetime {
       margin-top:10px;
       font-size:18px;
@@ -73,10 +72,9 @@
       100% {background-position:200% center;}
     }
 
-    /* Giữ phần mili giây cố định độ rộng để không rung */
     .ms {
       display:inline-block;
-      width:3ch; /* 3 ký tự */
+      width:3ch;
       font-family:monospace;
       text-align:left;
     }
@@ -107,12 +105,12 @@
     <img src="Logo.jpg" alt="Sea Minh Hub Logo" class="logo">
     <h1>Sea | Minh Hub</h1>
 
-    <!-- 🕒 Đồng hồ neon đầy đủ -->
     <div id="datetime">Đang tải thời gian...</div>
 
     <div class="actions">
       <a href="https://discord.gg/kJqB7R242H" class="btn">💬 Discord</a>
       <a href="https://www.youtube.com/@SeaMinhHub" class="btn">▶️ YouTube</a>
+      <a href="https://pastefy.com" class="btn">🌐 My Website</a>
     </div>
 
     <div class="section">
@@ -122,7 +120,6 @@
   </div>
 
   <script>
-    // 🕒 Cập nhật thời gian thực từng mili giây
     const timeEl = document.getElementById("datetime");
     function updateTime() {
       const now = new Date();
@@ -138,7 +135,6 @@
     setInterval(updateTime, 10);
     updateTime();
 
-    // 🍃 Canvas hiệu ứng lá rơi
     const canvas = document.getElementById("leavesCanvas");
     const ctx = canvas.getContext("2d");
     let W, H;
@@ -160,12 +156,7 @@
         this.speedX = Math.random() * 1 - 0.5;
         this.angle = Math.random() * 360;
         this.spin = (Math.random() - 0.5) * 2;
-        const colors = [
-          "hsl(90, 70%, 45%)",   // xanh lá
-          "hsl(45, 85%, 55%)",   // vàng
-          "hsl(15, 80%, 50%)",   // đỏ cam
-          "hsl(110, 60%, 50%)"   // xanh non
-        ];
+        const colors = ["hsl(90, 70%, 45%)","hsl(45, 85%, 55%)","hsl(15, 80%, 50%)","hsl(110, 60%, 50%)"];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
       draw(ctx) {
