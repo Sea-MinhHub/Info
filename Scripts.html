@@ -6,188 +6,147 @@
   <title>Scripts Sea | Minh Hub</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-    * {margin: 0; padding: 0; box-sizing: border-box;}
+    * {margin:0;padding:0;box-sizing:border-box;}
     body {
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(120deg, #6366f1, #06b6d4, #a855f7);
-      background-size: 300% 300%;
-      animation: gradient 10s ease infinite;
-      overflow: hidden;
-      color: #f8fafc;
-      position: relative;
+      font-family:'Poppins',sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      background:linear-gradient(120deg,#6366f1,#06b6d4,#a855f7);
+      background-size:300% 300%;
+      animation:gradient 10s ease infinite;
+      overflow:hidden;
+      color:#f8fafc;
+      position:relative;
     }
-
     @keyframes gradient {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
     }
-
     .card {
-      background: rgba(15,23,42,0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 30px;
-      width: 90%;
-      max-width: 800px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
-      z-index: 2;
-      position: relative;
-      animation: fadeIn 1s ease;
+      background:rgba(15,23,42,0.7);
+      backdrop-filter:blur(12px);
+      border-radius:20px;
+      padding:40px;
+      width:90%;
+      max-width:800px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 0 40px rgba(0,0,0,0.4);
+      z-index:2;
+      position:relative;
+      animation:fadeIn 1s ease;
     }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: scale(0.9);}
-      to {opacity: 1; transform: scale(1);}
-    }
-
+    @keyframes fadeIn {from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
     .logo {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 30px rgba(99,102,241,0.8);
-      animation: pulse 3s ease-in-out infinite;
+      width:80px;height:80px;border-radius:50%;object-fit:cover;
+      box-shadow:0 0 25px rgba(99,102,241,0.8);
+      animation:pulse 3s ease-in-out infinite;
     }
-
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 30px rgba(99,102,241,0.8); }
-      50% { box-shadow: 0 0 50px rgba(6,182,212,0.9); }
-    }
-
+    @keyframes pulse {0%,100%{box-shadow:0 0 25px rgba(99,102,241,0.8);}50%{box-shadow:0 0 45px rgba(6,182,212,0.9);}}
     h1 {
-      margin-top: 15px;
-      font-size: 26px;
-      font-weight: 700;
-      background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin-top:10px;font-size:26px;font-weight:700;
+      background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
-
-    .code-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 25px;
-      text-align: left;
-      position: relative;
-    }
-
     pre {
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-all;
-      color: #cbd5e1;
-      font-family: monospace;
-      font-size: 14px;
+      background:rgba(30,41,59,0.7);
+      color:#f8fafc;
+      text-align:left;
+      border-radius:10px;
+      padding:15px;
+      overflow:auto;
+      font-size:15px;
+      margin-top:15px;
+      border:1px solid rgba(255,255,255,0.1);
     }
-
-    .copy-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg,#06b6d4,#6366f1,#a855f7);
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .3s ease;
+    .btn {
+      display:inline-block;
+      margin-top:15px;
+      padding:10px 20px;
+      border-radius:10px;
+      font-weight:600;
+      color:white;
+      text-decoration:none;
+      background:linear-gradient(90deg,#14b8a6,#3b82f6,#8b5cf6);
+      box-shadow:0 0 20px rgba(59,130,246,0.5);
+      transition:all .3s ease;
     }
-
-    .copy-btn:hover {
-      transform: scale(1.1);
-      filter: brightness(1.3);
-      box-shadow: 0 0 25px rgba(255,255,255,.3);
-    }
-
-    a.back {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      border-radius: 10px;
-      background: linear-gradient(90deg,#14b8a6,#3b82f6,#8b5cf6);
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all .3s ease;
-    }
-
-    a.back:hover {
-      transform: scale(1.1);
-      filter: brightness(1.3);
-    }
-
-    /* 🍃 Hiệu ứng lá rơi */
-    .leaf {
-      position: fixed;
-      top: -10vh;
-      width: 25px;
-      height: 25px;
-      background-image: url('https://i.imgur.com/H6ucEae.png');
-      background-size: cover;
-      opacity: 0.9;
-      animation: fall linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0.7;
-      }
+    .btn:hover {transform:scale(1.1);filter:brightness(1.3);}
+    canvas#leavesCanvas {
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:1;pointer-events:none;
     }
   </style>
 </head>
 <body>
+  <canvas id="leavesCanvas"></canvas>
+
   <div class="card">
-    <img src="Logo.jpg" alt="Sea Minh Hub Logo" class="logo">
+    <img src="Logo.jpg" class="logo" alt="Logo">
     <h1>Scripts Sea | Minh Hub</h1>
 
-    <div class="code-box">
-      <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
-      <h2 style="color:#a5b4fc;margin-bottom:10px;">Script Main Fosaken Sea | Minh Hub</h2>
-      <pre id="code">loadstring(game:HttpGet("https://raw.githubusercontent.com/Sea-MinhHub/SeaMinhHub-X-XuanVP/refs/heads/main/Fosaken%20Main", true))()</pre>
-    </div>
-
-    <a href="index.html" class="back">🏠 Quay lại Trang Chính</a>
+    <h2 style="margin-top:20px;color:#a5b4fc;">Script Main Fosaken Sea | Minh Hub</h2>
+    <pre id="code">loadstring(game:HttpGet("https://raw.githubusercontent.com/Sea-MinhHub/SeaMinhHub-X-XuanVP/refs/heads/main/Fosaken%20Main", true))()</pre>
+    <a href="#" class="btn" id="copyBtn">📋 Copy Code</a>
+    <br>
+    <a href="index.html" class="btn">🏠 Quay lại trang chính</a>
   </div>
 
   <script>
-    // Copy code
-    function copyCode() {
-      const text = document.getElementById('code').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.textContent = "✅ Đã sao chép!";
-        setTimeout(() => btn.textContent = "📋 Copy Code", 2000);
-      });
-    }
+    document.getElementById('copyBtn').onclick=function(){
+      const code=document.getElementById('code').innerText;
+      navigator.clipboard.writeText(code);
+      this.textContent='✅ Đã copy!';
+      setTimeout(()=>this.textContent='📋 Copy Code',2000);
+    };
 
-    // 🍃 Tạo lá rơi
-    const numLeaves = 20; // số lượng lá
-    for (let i = 0; i < numLeaves; i++) {
-      const leaf = document.createElement('div');
-      leaf.classList.add('leaf');
-      leaf.style.left = Math.random() * 100 + 'vw';
-      leaf.style.animationDuration = 5 + Math.random() * 5 + 's';
-      leaf.style.animationDelay = Math.random() * 5 + 's';
-      leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
-      document.body.appendChild(leaf);
+    const canvas=document.getElementById("leavesCanvas"),ctx=canvas.getContext("2d");
+    let W,H;function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+    addEventListener("resize",resize);resize();
+    class Leaf{
+      constructor(){this.reset();}
+      reset(){
+        this.x=Math.random()*W;
+        this.y=Math.random()*-H;
+        this.size=10+Math.random()*30;
+        this.speedY=1+Math.random()*2;
+        this.speedX=Math.random()-0.5;
+        this.angle=Math.random()*360;
+        this.spin=(Math.random()-0.5)*2;
+        const colors=["#22c55e","#65a30d","#facc15","#eab308","#f97316","#ef4444"];
+        this.color=colors[Math.floor(Math.random()*colors.length)];
+      }
+      draw(){
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.rotate(this.angle*Math.PI/180);
+        ctx.scale(1,0.6);
+        ctx.beginPath();
+        ctx.ellipse(0,0,this.size,this.size/2,0,0,2*Math.PI);
+        ctx.fillStyle=this.color;
+        ctx.shadowColor=this.color;
+        ctx.shadowBlur=8;
+        ctx.fill();
+        ctx.restore();
+      }
+      update(){
+        this.y+=this.speedY;
+        this.x+=Math.sin(this.y*0.01)*1.5+this.speedX;
+        this.angle+=this.spin;
+        if(this.y>H+this.size)this.reset();
+      }
     }
+    const leaves=Array.from({length:40},()=>new Leaf());
+    function animate(){
+      ctx.clearRect(0,0,W,H);
+      for(const leaf of leaves){leaf.update();leaf.draw();}
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
