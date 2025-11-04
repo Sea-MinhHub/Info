@@ -8,7 +8,8 @@
     :root{ --bg:#0f1720; --panel:#0b1220; --accent:#00aaff; --text:#dbeafe; --muted:#93c5fd; }
     *{ box-sizing:border-box; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
     body{ margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#071026,#071827); color:var(--text); padding:24px; }
-    .card{ width:100%; max-width:680px; background:var(--panel); border:1px solid rgba(0,170,255,0.08); padding:20px; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.6); }
+    .card{ width:100%; max-width:680px; background:var(--panel); border:1px solid rgba(0,170,255,0.08); padding:20px; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.6); text-align:center; }
+    .logo{ width:80px; height:80px; object-fit:cover; border-radius:50%; margin-bottom:10px; box-shadow:0 0 12px rgba(0,170,255,0.4); }
     h1{ margin:0 0 8px 0; font-size:18px; color:var(--accent); }
     p{ margin:0 0 18px 0; color:var(--muted); font-size:13px; }
     .row{ display:flex; gap:10px; align-items:center; }
@@ -24,6 +25,7 @@
 </head>
 <body>
   <div class="card" role="main">
+    <img src="Logo.jpg" alt="Logo" class="logo" />
     <h1>Loadstring / HttpGet Builder</h1>
     <p>Nhập URL của script rồi bấm nút để copy chuỗi phù hợp để paste vào executor Roblox (ví dụ: <code>loadstring(game:HttpGet("URL", true))()</code>).</p>
 
@@ -51,7 +53,6 @@
     const msg = document.getElementById('msg');
 
     function sanitizeForLua(str){
-      // Escape backslashes and double quotes so string fits inside "..."
       return str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
     }
 
@@ -74,7 +75,6 @@
         msg.classList.add('success');
         setTimeout(()=>{ msg.textContent = ""; msg.classList.remove('success'); }, 1800);
       }catch(e){
-        // fallback
         const ta = document.createElement('textarea');
         ta.value = text;
         document.body.appendChild(ta);
@@ -100,12 +100,10 @@
       copyText(result);
     });
 
-    // optional: press Enter to copy loadstring
     urlInput.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter') { e.preventDefault(); copyLoad.click(); }
     });
 
-    // initialize preview if input has value from saved form/autofill
     updatePreview();
   </script>
 </body>
