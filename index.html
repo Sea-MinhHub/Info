@@ -6,132 +6,76 @@
   <title>Sea | Minh Hub</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-    * {margin: 0; padding: 0; box-sizing: border-box;}
+    * {margin:0;padding:0;box-sizing:border-box;}
     body {
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: linear-gradient(120deg, #6366f1, #06b6d4, #a855f7);
-      background-size: 300% 300%;
-      animation: gradient 10s ease infinite;
-      overflow: hidden;
-      color: #f8fafc;
-      position: relative;
+      font-family:'Poppins',sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      background:linear-gradient(120deg,#6366f1,#06b6d4,#a855f7);
+      background-size:300% 300%;
+      animation:gradient 10s ease infinite;
+      overflow:hidden;
+      color:#f8fafc;
+      position:relative;
     }
-
     @keyframes gradient {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
     }
-
     .card {
-      background: rgba(15,23,42,0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 40px;
-      width: 90%;
-      max-width: 700px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
-      z-index: 2;
-      position: relative;
-      animation: fadeIn 1s ease;
+      background:rgba(15,23,42,0.7);
+      backdrop-filter:blur(12px);
+      border-radius:20px;
+      padding:40px;
+      width:90%;
+      max-width:700px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 0 40px rgba(0,0,0,0.4);
+      z-index:2;
+      position:relative;
+      animation:fadeIn 1s ease;
     }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: scale(0.9);}
-      to {opacity: 1; transform: scale(1);}
-    }
-
+    @keyframes fadeIn {from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
     .logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 35px rgba(99,102,241,0.8);
-      animation: pulse 3s ease-in-out infinite;
+      width:100px;height:100px;border-radius:50%;object-fit:cover;
+      box-shadow:0 0 35px rgba(99,102,241,0.8);
+      animation:pulse 3s ease-in-out infinite;
     }
-
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 35px rgba(99,102,241,0.8); }
-      50% { box-shadow: 0 0 55px rgba(6,182,212,0.9); }
-    }
-
+    @keyframes pulse {0%,100%{box-shadow:0 0 35px rgba(99,102,241,0.8);}50%{box-shadow:0 0 55px rgba(6,182,212,0.9);}}
     h1 {
-      margin-top: 15px;
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin-top:15px;font-size:28px;font-weight:700;
+      background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 25px;
-    }
-
+    .actions {display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin-top:25px;}
     .btn {
-      padding: 12px 25px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(90deg,#14b8a6,#3b82f6,#8b5cf6);
-      transition: all .3s ease;
-      box-shadow: 0 0 20px rgba(59,130,246,0.5);
+      padding:12px 25px;border-radius:12px;font-weight:600;text-decoration:none;color:white;
+      background:linear-gradient(90deg,#14b8a6,#3b82f6,#8b5cf6);
+      transition:all .3s ease;box-shadow:0 0 20px rgba(59,130,246,0.5);
     }
-
-    .btn:hover {
-      transform: scale(1.1);
-      filter: brightness(1.3);
-      box-shadow: 0 0 35px rgba(255,255,255,0.4);
-    }
-
-    .section {
-      margin-top: 40px;
-    }
-
-    .section h2 {
-      font-size: 20px;
-      color: #a5b4fc;
-      margin-bottom: 15px;
-    }
-
-    /* 🍃 Canvas hiệu ứng lá */
+    .btn:hover {transform:scale(1.1);filter:brightness(1.3);box-shadow:0 0 35px rgba(255,255,255,0.4);}
+    .section {margin-top:40px;}
+    .section h2 {font-size:20px;color:#a5b4fc;margin-bottom:15px;}
     canvas#leavesCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:1;pointer-events:none;
     }
   </style>
 </head>
 <body>
-
   <canvas id="leavesCanvas"></canvas>
-
   <div class="card">
     <img src="Logo.jpg" alt="Sea Minh Hub Logo" class="logo">
     <h1>Sea | Minh Hub</h1>
-
     <div class="actions">
       <a href="https://discord.gg/kJqB7R242H" class="btn">💬 Discord</a>
       <a href="https://www.youtube.com/@SeaMinhHub" class="btn">▶️ YouTube</a>
     </div>
-
     <div class="section">
       <h2>My Scripts</h2>
       <a href="Scripts.html" class="btn">💻 Open Scripts Page</a>
@@ -139,70 +83,49 @@
   </div>
 
   <script>
-    // 🍃 Canvas hiệu ứng lá rơi tự tạo
-    const canvas = document.getElementById("leavesCanvas");
-    const ctx = canvas.getContext("2d");
-
-    let W, H;
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resize);
-    resize();
-
-    class Leaf {
-      constructor() {
-        this.reset();
+    const canvas=document.getElementById("leavesCanvas"),ctx=canvas.getContext("2d");
+    let W,H;function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+    addEventListener("resize",resize);resize();
+    class Leaf{
+      constructor(){this.reset();}
+      reset(){
+        this.x=Math.random()*W;
+        this.y=Math.random()*-H;
+        this.size=10+Math.random()*30;
+        this.speedY=1+Math.random()*2;
+        this.speedX=Math.random()-0.5;
+        this.angle=Math.random()*360;
+        this.spin=(Math.random()-0.5)*2;
+        const colors=["#22c55e","#65a30d","#facc15","#eab308","#f97316","#ef4444"];
+        this.color=colors[Math.floor(Math.random()*colors.length)];
       }
-
-      reset() {
-        this.x = Math.random() * W;
-        this.y = Math.random() * -H;
-        this.size = 15 + Math.random() * 25;
-        this.speedY = 1 + Math.random() * 2;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.angle = Math.random() * 360;
-        this.spin = (Math.random() - 0.5) * 2;
-        this.color = `hsl(${90 + Math.random() * 60}, 70%, ${40 + Math.random() * 20}%)`;
-      }
-
-      draw(ctx) {
+      draw(){
         ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate((this.angle * Math.PI) / 180);
-        ctx.scale(1, 0.6);
+        ctx.translate(this.x,this.y);
+        ctx.rotate(this.angle*Math.PI/180);
+        ctx.scale(1,0.6);
         ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, 2 * Math.PI);
-        ctx.fillStyle = this.color;
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur = 10;
+        ctx.ellipse(0,0,this.size,this.size/2,0,0,2*Math.PI);
+        ctx.fillStyle=this.color;
+        ctx.shadowColor=this.color;
+        ctx.shadowBlur=8;
         ctx.fill();
         ctx.restore();
       }
-
-      update() {
-        this.y += this.speedY;
-        this.x += Math.sin(this.y * 0.01) * 1.5 + this.speedX;
-        this.angle += this.spin;
-        if (this.y > H + this.size) this.reset();
+      update(){
+        this.y+=this.speedY;
+        this.x+=Math.sin(this.y*0.01)*1.5+this.speedX;
+        this.angle+=this.spin;
+        if(this.y>H+this.size)this.reset();
       }
     }
-
-    const leaves = Array.from({ length: 30 }, () => new Leaf());
-
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      for (let leaf of leaves) {
-        leaf.update();
-        leaf.draw(ctx);
-      }
+    const leaves=Array.from({length:40},()=>new Leaf());
+    function animate(){
+      ctx.clearRect(0,0,W,H);
+      for(const leaf of leaves){leaf.update();leaf.draw();}
       requestAnimationFrame(animate);
     }
-
     animate();
   </script>
-
 </body>
 </html>
