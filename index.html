@@ -55,12 +55,32 @@
       background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
+
+    /* 🕒 Đồng hồ neon */
     #datetime {
       margin-top:10px;
-      font-size:16px;
-      color:#cbd5e1;
-      letter-spacing:0.5px;
+      font-size:18px;
+      font-weight:600;
+      background:linear-gradient(90deg,#38bdf8,#a855f7,#38bdf8);
+      background-size:200% auto;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation:neonFlow 2s linear infinite;
+      text-shadow:0 0 10px rgba(56,189,248,0.5);
     }
+    @keyframes neonFlow {
+      0% {background-position:0% center;}
+      100% {background-position:200% center;}
+    }
+
+    /* Giữ phần mili giây cố định độ rộng để không rung */
+    .ms {
+      display:inline-block;
+      width:3ch; /* 3 ký tự */
+      font-family:monospace;
+      text-align:left;
+    }
+
     .actions {display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin-top:25px;}
     .btn {
       padding:12px 25px;border-radius:12px;font-weight:600;text-decoration:none;color:white;
@@ -87,7 +107,7 @@
     <img src="Logo.jpg" alt="Sea Minh Hub Logo" class="logo">
     <h1>Sea | Minh Hub</h1>
 
-    <!-- 🕒 Hiển thị ngày giờ mili giây -->
+    <!-- 🕒 Đồng hồ neon đầy đủ -->
     <div id="datetime">Đang tải thời gian...</div>
 
     <div class="actions">
@@ -102,7 +122,7 @@
   </div>
 
   <script>
-    // 🕒 Đồng hồ thời gian thực có mili giây
+    // 🕒 Cập nhật thời gian thực từng mili giây
     const timeEl = document.getElementById("datetime");
     function updateTime() {
       const now = new Date();
@@ -113,12 +133,12 @@
       const mi = String(now.getMinutes()).padStart(2, '0');
       const s = String(now.getSeconds()).padStart(2, '0');
       const ms = String(now.getMilliseconds()).padStart(3, '0');
-      timeEl.textContent = `📅 ${d}/${m}/${y} — ${h}:${mi}:${s}.${ms}`;
+      timeEl.innerHTML = `📅 ${d}/${m}/${y} — ${h}:${mi}:${s}.<span class="ms">${ms}</span>`;
     }
     setInterval(updateTime, 10);
     updateTime();
 
-    // 🍃 Canvas hiệu ứng lá rơi tự vẽ
+    // 🍃 Canvas hiệu ứng lá rơi
     const canvas = document.getElementById("leavesCanvas");
     const ctx = canvas.getContext("2d");
     let W, H;
@@ -131,9 +151,7 @@
     resize();
 
     class Leaf {
-      constructor() {
-        this.reset();
-      }
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * W;
         this.y = Math.random() * -H;
@@ -153,11 +171,10 @@
       draw(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate((this.angle * Math.PI) / 180);
+        ctx.rotate((this.angle * Math.PI)/180);
         ctx.scale(1, 0.6);
         ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, 2 * Math.PI);
+        ctx.ellipse(0, 0, this.size, this.size/2, 0, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 10;
@@ -173,7 +190,6 @@
     }
 
     const leaves = Array.from({ length: 40 }, () => new Leaf());
-
     function animate() {
       ctx.clearRect(0, 0, W, H);
       for (let leaf of leaves) {
