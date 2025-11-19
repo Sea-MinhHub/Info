@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Key system MM2</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0f0f0f;
+            color: #0ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+        }
+
+        textarea {
+            width: 400px;
+            height: 60px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #111;
+            color: #0ff;
+            border: 2px solid #0ff;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+            resize: none;
+            margin-bottom: 15px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #000;
+            color: #0ff;
+            border: 2px solid #0ff;
+            border-radius: 10px;
+            cursor: pointer;
+            text-shadow: 0 0 5px #0ff;
+            box-shadow: 0 0 10px #0ff;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0ff;
+            color: #000;
+            box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Key system MM2</h2>
+    <textarea id="codeBox" readonly></textarea><br>
+    <div class="button-group">
+        <button onclick="generateAndOpenYouTube()">Get key</button>
+        <button onclick="copyCode()">Copy</button>
+    </div>
+
+    <script>
+        const codes = [
+            "System_AdFKl189+=\\",
+            "System_HAGsftSGFGHiu",
+            "System_GHf6677ygV",
+            "System_/';.[][l='][jhgfg",
+            "System_#^&^%RFBHJ",
+            "System_@%^TFH?:"
+        ];
+
+        const KEY_STORAGE = "mm2_key";
+        const TIME_STORAGE = "mm2_key_time";
+        const KEY_DURATION = 10 * 60 * 1000; // 10 minutes in ms
+
+        let keyTimeout;
+
+        // Function to remove key
+        function removeKey() {
+            localStorage.removeItem(KEY_STORAGE);
+            localStorage.removeItem(TIME_STORAGE);
+            document.getElementById("codeBox").value = "";
+            alert("Your key has expired.");
+        }
+
+        // Load saved key on page load
+        window.addEventListener("load", () => {
+            const savedKey = localStorage.getItem(KEY_STORAGE);
+            const savedTime = localStorage.getItem(TIME_STORAGE);
+
+            if (savedKey && savedTime) {
+                const now = new Date().getTime();
+                const timePassed = now - savedTime;
+
+                if (timePassed < KEY_DURATION) {
+                    document.getElementById("codeBox").value = savedKey;
+                    alert("Welcome back! Your previous key is still valid.");
+
+                    // Set timeout to auto-remove key after remaining time
+                    keyTimeout = setTimeout(removeKey, KEY_DURATION - timePassed);
+                } else {
+                    removeKey();
+                }
+            }
+        });
+
+        function generateAndOpenYouTube() {
+            const randomCode = codes[Math.floor(Math.random() * codes.length)];
+            document.getElementById("codeBox").value = randomCode;
+
+            const now = new Date().getTime();
+            localStorage.setItem(KEY_STORAGE, randomCode);
+            localStorage.setItem(TIME_STORAGE, now);
+
+            alert("A new key has been generated: " + randomCode);
+
+            // Set timeout to auto-remove key after 10 minutes
+            if (keyTimeout) clearTimeout(keyTimeout);
+            keyTimeout = setTimeout(removeKey, KEY_DURATION);
+
+            // Open YouTube
+            const youtubeAppURL = "youtube://www.youtube.com/@seaminhhub";
+            const youtubeWebURL = "https://www.youtube.com/@seaminhhub";
+
+            setTimeout(() => { window.location.href = youtubeWebURL; }, 500);
+            window.location.href = youtubeAppURL;
+        }
+
+        function copyCode() {
+            const codeBox = document.getElementById("codeBox");
+            codeBox.select();
+            codeBox.setSelectionRange(0, 99999); // for mobile devices
+
+            navigator.clipboard.writeText(codeBox.value).then(() => {
+                alert("Copied to clipboard: " + codeBox.value);
+            }).catch(err => {
+                alert("Failed to copy. Please try again.");
+            });
+        }
+    </script>
+</body>
+</html>
