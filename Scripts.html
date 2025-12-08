@@ -83,6 +83,7 @@
     }
   </style>
 </head>
+
 <body>
   <canvas id="leavesCanvas"></canvas>
 
@@ -90,24 +91,32 @@
     <img src="Logo.jpg" class="logo" alt="Logo">
     <h1>Scripts Sea | Minh Hub</h1>
 
-    <!-- ĐÃ ĐỔI THỨ TỰ – FOSAKEN LÊN TRÊN -->
+    <!-- SCRIPT 1 -->
     <h2 style="margin-top:20px;color:#a5b4fc;">Script Main automatically select scripts</h2>
     <pre id="code">loadstring(game:HttpGet("https://raw.githubusercontent.com/Sea-MinhHub/SeaMinhHub/main/Main", true))()</pre>
     <a href="#" class="btn" id="copyBtn">📋 Copy Code</a>
 
+    <!-- SCRIPT 2 -->
     <h2 style="margin-top:20px;color:#a5b4fc;">Script Main Fosaken Sea | Minh Hub Beta V1.90</h2>
     <pre id="code2">loadstring(game:HttpGet("https://raw.githubusercontent.com/Sea-MinhHub/SeaMinhHub/main/Fosaken%20Main", true))()</pre>
     <a href="#" class="btn" id="copyBtn2">📋 Copy Code</a>
 
+    <!-- SCRIPT 3 -->
     <h2 style="margin-top:20px;color:#a5b4fc;">Mm2 V 1.5 Fix auto farm</h2>
     <pre id="code3">loadstring(game:HttpGet("https://raw.githubusercontent.com/Sea-MinhHub/SeaMinhHub/main/Key%20System", true))()</pre>
     <a href="#" class="btn" id="copyBtn3">📋 Copy Code</a>
+
+    <!-- SCRIPT 4 (BẠN YÊU CẦU) -->
+    <h2 style="margin-top:20px;color:#a5b4fc;">untitled tag game V 1.0</h2>
+    <pre id="code4">loadstring(game:HttpGet("https://raw.githubusercontent.com/Sea-MinhHub/SeaMinhHub/main/untitled%20tag%20game", true))()</pre>
+    <a href="#" class="btn" id="copyBtn4">📋 Copy Code</a>
 
     <br>
     <a href="https://sea-minhhub.github.io/Info/Main" class="btn">🏠 Quay lại trang chính</a>
   </div>
 
   <script>
+    /* Copy Script */
     document.getElementById('copyBtn').onclick=function(){
       const code=document.getElementById('code').innerText;
       navigator.clipboard.writeText(code);
@@ -120,10 +129,24 @@
       this.textContent='✅ Đã copy!';
       setTimeout(()=>this.textContent='📋 Copy Code',2000);
     };
+    document.getElementById('copyBtn3').onclick=function(){
+      const code=document.getElementById('code3').innerText;
+      navigator.clipboard.writeText(code);
+      this.textContent='✅ Đã copy!';
+      setTimeout(()=>this.textContent='📋 Copy Code',2000);
+    };
+    document.getElementById('copyBtn4').onclick=function(){
+      const code=document.getElementById('code4').innerText;
+      navigator.clipboard.writeText(code);
+      this.textContent='✅ Đã copy!';
+      setTimeout(()=>this.textContent='📋 Copy Code',2000);
+    };
 
+    /* Hiệu ứng lá */
     const canvas=document.getElementById("leavesCanvas"),ctx=canvas.getContext("2d");
     let W,H;function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
     addEventListener("resize",resize);resize();
+
     class Leaf{
       constructor(){this.reset();}
       reset(){
@@ -154,9 +177,10 @@
         this.y+=this.speedY;
         this.x+=Math.sin(this.y*0.01)*1.5+this.speedX;
         this.angle+=this.spin;
-        if(this.y>H+this.size)this.reset();
+        if(this.y>H+this.size) this.reset();
       }
     }
+
     const leaves=Array.from({length:40},()=>new Leaf());
     function animate(){
       ctx.clearRect(0,0,W,H);
